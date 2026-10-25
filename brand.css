@@ -1,0 +1,52 @@
+/* The shared look for every page served from iguigova.github.io, taken from
+   urgh.weebly.com: a charcoal Arial title, a taupe rule, burnt-orange links,
+   a label column with hairline dividers, and a dark footer band.
+   Every colour pair meets WCAG AA contrast in both themes.
+   A page links /brand.css and keeps no copy of it. */
+:root {
+  --bg: #ffffff; --ink: #333333; --muted: #6f6866; --link: #b85a0e; --taupe: #948979;
+  --hair: #dddddd; --band: #575352; --panel: #f6f4f2;
+  --sans: Arial, "Liberation Sans", Helvetica, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1f1d1c; --ink: #e8e4e1; --muted: #aaa29e; --link: #f0954a; --taupe: #a89d8d;
+  --hair: #3a3634; --band: #0f0e0e; --panel: #292625; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #1f1d1c; --ink: #e8e4e1; --muted: #aaa29e; --link: #f0954a; --taupe: #a89d8d;
+  --hair: #3a3634; --band: #0f0e0e; --panel: #292625; color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.6 var(--sans); }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 40px 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--link); text-decoration: none; }
+a:hover, a:focus-visible { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+
+header { border-bottom: 4px solid var(--taupe); padding-bottom: 14px; margin-bottom: 28px;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
+h1 { font-weight: 400; font-size: clamp(28px, 5vw, 40px); line-height: 1.05; margin: 0; text-wrap: balance; }
+.tag { color: var(--muted); margin: 6px 0 0; }
+
+section { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 0 24px; margin-bottom: 34px; }
+section > h2 { font-size: 13px; font-weight: 400; color: var(--link); margin: 0; padding: 4px 0 3px;
+  border-bottom: 1px solid var(--hair); align-self: start; letter-spacing: .02em; }
+section > div { min-width: 0; }
+h3 { font-size: 16px; margin: 18px 0 4px; }
+h3:first-child { margin-top: 0; }
+p { margin: 0 0 10px; max-width: 70ch; }
+ul, ol { margin: 4px 0 12px; padding-left: 20px; max-width: 72ch; }
+li { margin-bottom: 4px; }
+li::marker { color: var(--taupe); }
+code, pre { font-family: var(--mono); font-size: 13px; background: var(--panel); border-radius: 3px; }
+code { padding: 1px 5px; }
+pre { padding: 10px 12px; overflow-x: auto; }
+
+footer { margin-top: 20px; }
+footer .line { text-align: right; color: var(--muted); font-size: 13px; padding: 0 0 6px; }
+footer .band { height: 14px; background: var(--band); }
+
+@media (max-width: 640px) { section { grid-template-columns: 1fr; } section > h2 { margin-bottom: 8px; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
