@@ -1,15 +1,13 @@
-/* The shared look for every page served from iguigova.github.io. Its source is
-   urgh.weebly.com (https://urgh.weebly.com/files/main_style.css), and it keeps
-   that site's colours and roles: grey text on white, the orange site title,
-   orange links, a taupe rule under the header, hairline dividers and the dark
-   footer band. It departs from the source only where WCAG AA requires: links
-   (#cc6714 there) and muted text (#999999 there) are darker on white, and text is
-   15px, not 11px. The dark theme has no source; it keeps the orange, the taupe
-   and the band as they are, on neutral greys.
-   A page links /brand.css and keeps no copy of it, with two exceptions that
-   can't link it. The Trust Loop artifact inlines it verbatim under a comment
-   naming its commit, because the artifact's content security policy refuses an
-   outside stylesheet. boca's build downloads it into the extension bundle. */
+/* The base style of every page and document I make: grey text on white, an
+   orange title and links, a taupe rule under the header, hairline dividers
+   and a dark footer band, in a light and a dark theme. Its text passes
+   WCAG AA in both.
+   A project loads it by a relative path to the site root, and its own rules
+   override what they need. ~/src/oceanhue mirrors the site, and
+   ~/src/oceanhue/brand.css is a symlink to this file, so the same path works
+   on the live site and offline. The one copy is in the Trust Loop artifact,
+   whose content security policy refuses an outside stylesheet; it names the
+   commit it copied. */
 :root {
   --bg: #ffffff; --ink: #666666; --muted: #707070; --title: #cc6633; --link: #af5811;
   --rule: #948979; --hair: #cccccc; --band: #575352; --panel: #f5f5f5;
