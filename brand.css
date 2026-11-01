@@ -1,7 +1,7 @@
 /* The base style of every page and document I make: grey text on white, an
    orange title and links, a taupe rule under the header, hairline dividers,
-   a dark footer band and a green for success, in a light and a dark theme. Its text passes
-   WCAG AA in both.
+   a dark footer band and a green for success, in a light and a dark theme.
+   Its text passes WCAG AA in both.
    A project loads it by a relative path to the site root, and its own rules
    override what they need. ~/src/oceanhue mirrors the site, and
    ~/src/oceanhue/brand.css is a symlink to this file, so the same path works
