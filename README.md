@@ -6,6 +6,8 @@ project page served under it.
 - `index.html` is the site's one page and the one list of the showcases,
   libraries and links. The profile README and the profile facts link to it
   and list nothing themselves, so a project joins by one edit here.
-- `brand.css` holds the colour tokens, both themes and the base layout. Every
+- `brand.css` holds the colour tokens, both themes and the base layout. A
   project page at `iguigova.github.io/<repo>/` links `/brand.css` and keeps
-  no copy, so a change to the look is one commit here.
+  no copy, so a change to the look is one commit here. Its header names the
+  two places that can't link it and carry a copy instead. The stitchback and
+  newton3 demos don't link it yet and carry styles of their own.

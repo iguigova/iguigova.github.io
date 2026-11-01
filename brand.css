@@ -1,21 +1,24 @@
-/* The shared look for every page served from iguigova.github.io, taken from
-   urgh.weebly.com: a charcoal Arial title, a taupe rule, burnt-orange links,
-   a label column with hairline dividers, and a dark footer band.
-   Every colour pair meets WCAG AA contrast in both themes.
-   A page links /brand.css and keeps no copy of it. */
+/* The shared look for every page served from iguigova.github.io: white, black
+   and the orange of urgh.weebly.com, urgh2.weebly.com and oceanhue.blogspot.com.
+   Every grey is neutral. The orange comes in two shades, a darker one for text on
+   white and a brighter one on black. Every text pair meets WCAG AA in both themes.
+   A page links /brand.css and keeps no copy of it, with two exceptions that
+   can't link it. The Trust Loop artifact inlines it verbatim under a comment
+   naming its commit, because the artifact's content security policy refuses an
+   outside stylesheet. boca's build downloads it into the extension bundle. */
 :root {
-  --bg: #ffffff; --ink: #333333; --muted: #6f6866; --link: #b85a0e; --taupe: #948979;
-  --hair: #dddddd; --band: #575352; --panel: #f6f4f2;
+  --bg: #ffffff; --ink: #111111; --muted: #595959; --link: #b45309; --rule: #111111;
+  --hair: #e0e0e0; --band: #111111; --panel: #f5f5f5;
   --sans: Arial, "Liberation Sans", Helvetica, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #1f1d1c; --ink: #e8e4e1; --muted: #aaa29e; --link: #f0954a; --taupe: #a89d8d;
-  --hair: #3a3634; --band: #0f0e0e; --panel: #292625; color-scheme: dark } }
+  --bg: #0a0a0a; --ink: #f2f2f2; --muted: #a3a3a3; --link: #ff9640; --rule: #ff9640;
+  --hair: #262626; --band: #000000; --panel: #171717; color-scheme: dark } }
 :root[data-theme="dark"] {
-  --bg: #1f1d1c; --ink: #e8e4e1; --muted: #aaa29e; --link: #f0954a; --taupe: #a89d8d;
-  --hair: #3a3634; --band: #0f0e0e; --panel: #292625; color-scheme: dark }
+  --bg: #0a0a0a; --ink: #f2f2f2; --muted: #a3a3a3; --link: #ff9640; --rule: #ff9640;
+  --hair: #262626; --band: #000000; --panel: #171717; color-scheme: dark }
 
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.6 var(--sans); }
@@ -25,7 +28,7 @@ a { color: var(--link); text-decoration: none; }
 a:hover, a:focus-visible { text-decoration: underline; }
 :focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
 
-header { border-bottom: 4px solid var(--taupe); padding-bottom: 14px; margin-bottom: 28px;
+header { border-bottom: 4px solid var(--rule); padding-bottom: 14px; margin-bottom: 28px;
   display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
 h1 { font-weight: 400; font-size: clamp(28px, 5vw, 40px); line-height: 1.05; margin: 0; text-wrap: balance; }
 .tag { color: var(--muted); margin: 6px 0 0; }
@@ -39,7 +42,7 @@ h3:first-child { margin-top: 0; }
 p { margin: 0 0 10px; max-width: 70ch; }
 ul, ol { margin: 4px 0 12px; padding-left: 20px; max-width: 72ch; }
 li { margin-bottom: 4px; }
-li::marker { color: var(--taupe); }
+li::marker { color: var(--rule); }
 code, pre { font-family: var(--mono); font-size: 13px; background: var(--panel); border-radius: 3px; }
 code { padding: 1px 5px; }
 pre { padding: 10px 12px; overflow-x: auto; }
