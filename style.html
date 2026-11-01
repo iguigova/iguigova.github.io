@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Style · Ilka Guigova</title>
+<meta name="description" content="The base style of every page and document I make, shown with itself.">
+<link rel="stylesheet" href="brand.css">
+<style>
+.themes { display: flex; gap: 8px; flex-wrap: wrap; }
+.themes button { font: inherit; font-size: 13px; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--hair); border-radius: 3px; padding: 6px 12px; min-height: 44px; cursor: pointer; }
+.themes button[aria-pressed="true"] { border-color: var(--link); color: var(--link); }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 6px 12px 6px 0; border-bottom: 1px solid var(--hair); vertical-align: middle; }
+th { font-weight: 400; color: var(--muted); font-size: 13px; }
+code { white-space: nowrap; }
+.chip { display: inline-block; width: 28px; height: 28px; border-radius: 3px; vertical-align: middle;
+  margin-right: 8px; border: 1px solid #767676; }
+.fonts p { margin-bottom: 6px; }
+.good { color: var(--good); }
+.sample { border: 1px solid var(--hair); padding: 16px; }
+.sample header { margin-bottom: 14px; }
+.sample h1 { font-size: 28px; }
+.sample section { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Style</h1>
+      <p class="tag">The base style of every page and document I make, shown with itself.</p>
+    </div>
+    <div class="themes" role="group" aria-label="Theme">
+      <button type="button" data-set="">System</button>
+      <button type="button" data-set="light">Light</button>
+      <button type="button" data-set="dark">Dark</button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>How it works</h2>
+      <div>
+        <p>One file, <a href="brand.css"><code>brand.css</code></a>, holds every colour, both themes and the base layout. A project loads it, then adds its own rules on top, and its own rules win.</p>
+        <p>This page loads that file too. The colours below are read from it as the page opens, so they can't drift from it.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Colours</h2>
+      <div>
+        <table>
+          <thead><tr><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead>
+          <tbody id="colours"></tbody>
+        </table>
+        <p class="tag">Each value is followed by its contrast against that theme's <code>--bg</code>. Text needs 4.5:1. <code>--title</code> is only for large titles and <code>--rule</code> only for lines and markers, which need 3:1. <code>--hair</code>, <code>--panel</code> and <code>--band</code> are dividers and backgrounds, never text.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Fonts</h2>
+      <div class="fonts" id="fonts"></div>
+    </section>
+
+    <section>
+      <h2>Type</h2>
+      <div>
+        <h3>A heading, in <code>--head</code></h3>
+        <p>Body text is <code>--ink</code>, 15px. A <a href="#type">link</a> is <code>--link</code>. <span class="tag">Quieter text is <code>--muted</code>.</span> <span class="good">Success is <code>--good</code>.</span></p>
+        <ul>
+          <li>A list's markers take <code>--rule</code>.</li>
+          <li>Inline <code>code</code> sits on <code>--panel</code>.</li>
+        </ul>
+<pre><code>@import url("../../brand.css") layer(brand);</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>In use</h2>
+      <div>
+        <div class="sample">
+          <header>
+            <div>
+              <h1>Ilka Guigova</h1>
+              <p class="tag">Building systems where correctness matters.</p>
+            </div>
+          </header>
+          <section>
+            <h2>Experience</h2>
+            <div>
+              <h3>A project</h3>
+              <ul><li>What I built, and what it changed.</li></ul>
+            </div>
+          </section>
+        </div>
+        <p class="tag">The resume, the cover letter and every project page use this layout: a title, a rule, a label column and a body.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="line"><a href="/">iguigova.github.io</a></div>
+    <div class="band" aria-hidden="true"></div>
+  </footer>
+</div>
+<script>
+(() => {
+  const root = document.documentElement;
+  const sheet = [...document.styleSheets].find(s => s.href && s.href.endsWith('/brand.css'));
+  const names = [];
+  for (const rule of sheet.cssRules) {
+    if (rule.selectorText !== ':root') continue;
+    for (const p of rule.style) if (p.startsWith('--') && !names.includes(p)) names.push(p);
+  }
+  const read = (theme) => {
+    root.dataset.theme = theme;
+    const cs = getComputedStyle(root);
+    return Object.fromEntries(names.map(n => [n, cs.getPropertyValue(n).trim()]));
+  };
+  const saved = root.dataset.theme;
+  const light = read('light'), dark = read('dark');
+  if (saved) root.dataset.theme = saved; else delete root.dataset.theme;
+
+  const lum = (hex) => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map(c => c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)
+    .reduce((a, c, i) => a + c * [0.2126, 0.7152, 0.0722][i], 0);
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return ((x + 0.05) / (y + 0.05)).toFixed(2); };
+  const isHex = (v) => /^#[0-9a-f]{6}$/i.test(v);
+  const cell = (v, bg) => {
+    const td = document.createElement('td');
+    const chip = document.createElement('span');
+    chip.className = 'chip'; chip.style.background = v; chip.setAttribute('aria-hidden', 'true');
+    const code = document.createElement('code'); code.textContent = v;
+    td.append(chip, code, v === bg ? '' : ` ${ratio(v, bg)}:1`);
+    return td;
+  };
+
+  const tbody = document.getElementById('colours');
+  const fonts = document.getElementById('fonts');
+  for (const n of names) {
+    if (isHex(light[n])) {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th'); th.scope = 'row';
+      const code = document.createElement('code'); code.textContent = n; th.append(code);
+      tr.append(th, cell(light[n], light['--bg']), cell(dark[n], dark['--bg']));
+      tbody.append(tr);
+    } else {
+      const p = document.createElement('p');
+      p.style.fontFamily = `var(${n})`;
+      const code = document.createElement('code'); code.textContent = n;
+      p.append(code, ` The quick brown fox jumps over the lazy dog. ${light[n]}`);
+      fonts.append(p);
+    }
+  }
+
+  const buttons = document.querySelectorAll('.themes button');
+  const show = () => buttons.forEach(b => b.setAttribute('aria-pressed', String((root.dataset.theme || '') === b.dataset.set)));
+  buttons.forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.set) root.dataset.theme = b.dataset.set; else delete root.dataset.theme;
+    show();
+  }));
+  show();
+})();
+</script>
+</body>
+</html>

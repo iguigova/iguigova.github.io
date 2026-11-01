@@ -13,3 +13,6 @@ page and document I make.
   `~/src/oceanhue/brand.css` is a symlink to this file, so the same path
   works on the live site and offline. A change to the style is one commit
   here.
+- `style.html` shows `brand.css` with itself: every colour in both themes and
+  its contrast, read from the stylesheet as the page opens, then the fonts,
+  the type and the layout in use.
