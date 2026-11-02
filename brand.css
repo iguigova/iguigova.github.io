@@ -3,7 +3,8 @@
    a dark footer band and a green for success, in a light and a dark theme.
    Its text passes WCAG AA in both. A colour that differs by theme is
    light-dark(light, dark): the system picks the theme, and data-theme="light"
-   or "dark" on the root overrides it.
+   or "dark" on the root overrides it. brand.js beside this file sets it from
+   a switch on the page, which .theme-switch draws.
    A project loads it by a relative path to the site root, and its own rules
    override what they need. ~/src/oceanhue mirrors the site, and
    ~/src/oceanhue/brand.css is a symlink to this file, so the same path works
@@ -49,9 +50,15 @@ code, pre { font-family: var(--mono); font-size: 13px; background: var(--panel);
 code { padding: 1px 5px; }
 pre { padding: 10px 12px; overflow-x: auto; }
 
+.theme-switch { position: absolute; z-index: 1; top: 8px; right: max(12px, env(safe-area-inset-right, 0px));
+  font: 13px/1 var(--sans); color: var(--link); background: var(--bg); border: 1px solid var(--hair);
+  border-radius: 14px; padding: 6px 10px; min-height: 28px; cursor: pointer; }
+.theme-switch:hover { border-color: var(--link); }
+
 footer { margin-top: 20px; }
 footer .line { text-align: right; color: var(--muted); font-size: 13px; padding: 0 0 6px; }
 footer .band { height: 14px; background: var(--band); }
 
 @media (max-width: 640px) { section { grid-template-columns: 1fr; } section > h2 { margin-bottom: 8px; } }
+@media print { .theme-switch { display: none; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

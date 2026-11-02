@@ -6,11 +6,8 @@
 <title>Style · Ilka Guigova</title>
 <meta name="description" content="The base style of every page and document I make, shown with itself.">
 <link rel="stylesheet" href="brand.css">
+<script src="brand.js"></script>
 <style>
-.themes { display: flex; gap: 8px; flex-wrap: wrap; }
-.themes button { font: inherit; font-size: 13px; color: var(--ink); background: var(--bg);
-  border: 1px solid var(--hair); border-radius: 3px; padding: 6px 12px; min-height: 44px; cursor: pointer; }
-.themes button[aria-pressed="true"] { border-color: var(--link); color: var(--link); }
 table { border-collapse: collapse; width: 100%; }
 th, td { text-align: left; padding: 6px 12px 6px 0; border-bottom: 1px solid var(--hair); vertical-align: middle; }
 th { font-weight: 400; color: var(--muted); font-size: 13px; }
@@ -38,11 +35,6 @@ code { white-space: nowrap; }
     <div>
       <h1>Style</h1>
       <p class="tag">The base style of every page and document I make, shown with itself.</p>
-    </div>
-    <div class="themes" role="group" aria-label="Theme">
-      <button type="button" data-set="">System</button>
-      <button type="button" data-set="light">Light</button>
-      <button type="button" data-set="dark">Dark</button>
     </div>
   </header>
 
@@ -87,7 +79,7 @@ code { white-space: nowrap; }
     <section>
       <h2>In use</h2>
       <div>
-        <p>These are the live pages, not pictures of them. They take the theme the buttons above choose. The frames are for looking; a heading opens the page itself.</p>
+        <p>These are the live pages, not pictures of them. They take the theme the switch at the top chooses, as every page does. The frames are for looking; a heading opens the page itself.</p>
         <h3><a href="/">The hub</a></h3>
         <div class="view" inert><iframe src="/" title="The hub" loading="lazy"></iframe></div>
         <h3><a href="/stitchback/">stitchback</a></h3>
@@ -188,23 +180,6 @@ code { white-space: nowrap; }
       fonts.append(p);
     }
   }
-
-  const buttons = document.querySelectorAll('.themes button');
-  const show = () => buttons.forEach(b => b.setAttribute('aria-pressed', String((root.dataset.theme || '') === b.dataset.set)));
-  const frames = document.querySelectorAll('.view iframe');
-  const follow = (frame) => {
-    const doc = frame.contentDocument;
-    if (!doc || doc.URL === 'about:blank') return;
-    if (root.dataset.theme) doc.documentElement.dataset.theme = root.dataset.theme;
-    else delete doc.documentElement.dataset.theme;
-  };
-  frames.forEach(f => { f.addEventListener('load', () => follow(f)); follow(f); });
-  buttons.forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.set) root.dataset.theme = b.dataset.set; else delete root.dataset.theme;
-    show();
-    frames.forEach(follow);
-  }));
-  show();
 })();
 </script>
 </body>
