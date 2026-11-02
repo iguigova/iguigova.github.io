@@ -15,7 +15,7 @@ page and document I make.
   here.
 - `style.html` shows `brand.css` with itself: every colour in both themes and
   its contrast, read from the stylesheet as the page opens, then the fonts,
-  the type, and the hub, stitchback and newton3 as live frames in both
-  themes. The home page's footer links to it. A project colour that differs
-  by theme is `light-dark(light, dark)`, so it follows the theme `brand.css`
-  sets, and a frame can show it in either.
+  the type, and the hub, stitchback and newton3 as live frames that take the
+  theme its buttons choose. The home page's footer links to it. A project
+  colour that differs by theme is `light-dark(light, dark)`, so it follows
+  the theme `brand.css` sets.
