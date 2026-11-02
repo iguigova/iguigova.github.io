@@ -136,14 +136,24 @@ code { white-space: nowrap; }
     if (rule.selectorText !== ':root') continue;
     for (const p of rule.style) if (p.startsWith('--') && !names.includes(p)) names.push(p);
   }
+  // A colour token may be light-dark(light, dark), so each is resolved by
+  // painting a probe with it in each theme; a font token is read as written.
+  const probe = document.body.appendChild(document.createElement('span'));
+  const hex = (rgb) => '#' + rgb.match(/\d+/g).slice(0, 3).map(c => (+c).toString(16).padStart(2, '0')).join('');
   const read = (theme) => {
     root.dataset.theme = theme;
     const cs = getComputedStyle(root);
-    return Object.fromEntries(names.map(n => [n, cs.getPropertyValue(n).trim()]));
+    return Object.fromEntries(names.map(n => {
+      const raw = cs.getPropertyValue(n).trim();
+      if (!CSS.supports('color', raw)) return [n, raw];
+      probe.style.color = `var(${n})`;
+      return [n, hex(getComputedStyle(probe).color)];
+    }));
   };
   const saved = root.dataset.theme;
   const light = read('light'), dark = read('dark');
   if (saved) root.dataset.theme = saved; else delete root.dataset.theme;
+  probe.remove();
 
   const lum = (hex) => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
     .map(c => c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)
