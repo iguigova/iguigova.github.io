@@ -3,7 +3,7 @@
 The GitHub site at https://iguigova.github.io, and the base style of every
 page and document I make.
 
-- `index.html` is the site's one page and the one list of the showcases,
+- `index.html` is the home page and the one list of the showcases,
   libraries and links. The profile README and the profile facts link to it
   and list nothing themselves, so a project joins by one edit here.
 - `brand.css` is the base style of every page and document: the colour
@@ -15,4 +15,7 @@ page and document I make.
   here.
 - `style.html` shows `brand.css` with itself: every colour in both themes and
   its contrast, read from the stylesheet as the page opens, then the fonts,
-  the type and the layout in use.
+  the type, and the hub, stitchback and newton3 as live frames in both
+  themes. The home page's footer links to it. A project colour that differs
+  by theme is `light-dark(light, dark)`, so it follows the theme `brand.css`
+  sets, and a frame can show it in either.

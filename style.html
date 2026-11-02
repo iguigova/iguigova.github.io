@@ -23,6 +23,13 @@ code { white-space: nowrap; }
 .sample header { margin-bottom: 14px; }
 .sample h1 { font-size: 28px; }
 .sample section { margin-bottom: 0; }
+.sample .row { display: flex; justify-content: space-between; gap: 8px; }
+.sample .when { color: var(--muted); font-size: 13px; }
+.frames { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.frames figure { margin: 0; }
+.frames figcaption { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.view { height: 280px; overflow: hidden; border: 1px solid var(--hair); }
+.view iframe { width: 200%; height: 200%; border: 0; transform: scale(.5); transform-origin: 0 0; display: block; }
 </style>
 </head>
 <body>
@@ -80,22 +87,46 @@ code { white-space: nowrap; }
     <section>
       <h2>In use</h2>
       <div>
-        <div class="sample">
-          <header>
-            <div>
-              <h1>Ilka Guigova</h1>
-              <p class="tag">Building systems where correctness matters.</p>
-            </div>
-          </header>
-          <section>
-            <h2>Experience</h2>
-            <div>
-              <h3>A project</h3>
-              <ul><li>What I built, and what it changed.</li></ul>
-            </div>
-          </section>
+        <p>These are the live pages, not pictures of them, each shown in both themes. Each frame sets its page's theme the way the buttons above set this one's. The frames are for looking; a heading opens the page itself.</p>
+        <h3><a href="/">The hub</a></h3>
+        <div class="frames">
+          <figure data-theme="light"><figcaption>Light</figcaption><div class="view" inert><iframe src="/" title="The hub, light theme" loading="lazy"></iframe></div></figure>
+          <figure data-theme="dark"><figcaption>Dark</figcaption><div class="view" inert><iframe src="/" title="The hub, dark theme" loading="lazy"></iframe></div></figure>
         </div>
-        <p class="tag">The resume, the cover letter and every project page use this layout: a title, a rule, a label column and a body.</p>
+        <h3><a href="/stitchback/">stitchback</a></h3>
+        <div class="frames">
+          <figure data-theme="light"><figcaption>Light</figcaption><div class="view" inert><iframe src="/stitchback/" title="stitchback demo, light theme" loading="lazy"></iframe></div></figure>
+          <figure data-theme="dark"><figcaption>Dark</figcaption><div class="view" inert><iframe src="/stitchback/" title="stitchback demo, dark theme" loading="lazy"></iframe></div></figure>
+        </div>
+        <h3><a href="/newton3/deliverables/demo.html">newton3</a></h3>
+        <div class="frames">
+          <figure data-theme="light"><figcaption>Light</figcaption><div class="view" inert><iframe src="/newton3/deliverables/demo.html" title="newton3 demo, light theme" loading="lazy"></iframe></div></figure>
+          <figure data-theme="dark"><figcaption>Dark</figcaption><div class="view" inert><iframe src="/newton3/deliverables/demo.html" title="newton3 demo, dark theme" loading="lazy"></iframe></div></figure>
+        </div>
+        <h3>The resume and the cover letter</h3>
+        <p>These two are private, so here is their shape. They use this same layout and add only a print layout of their own: the page size and smaller type. They print in the light theme.</p>
+        <div class="frames">
+          <figure><figcaption>Resume</figcaption>
+            <div class="sample">
+              <header><div><h1>Ilka Guigova</h1><p class="tag">Building systems where correctness matters.</p></div></header>
+              <section>
+                <h2>Experience</h2>
+                <div>
+                  <div class="row"><strong>A company</strong><span class="when">2021 – 2024</span></div>
+                  <ul><li>What I built, and what it changed.</li></ul>
+                </div>
+              </section>
+            </div>
+          </figure>
+          <figure><figcaption>Cover letter</figcaption>
+            <div class="sample">
+              <header><div><h1>Ilka Guigova</h1><p class="tag">Building systems where correctness matters.</p></div></header>
+              <p class="tag">To the hiring team, about the role</p>
+              <p>A short letter, in the body text, that says why this role and why me.</p>
+              <p>Ilka</p>
+            </div>
+          </figure>
+        </div>
       </div>
     </section>
   </main>
@@ -162,6 +193,13 @@ code { white-space: nowrap; }
     show();
   }));
   show();
+
+  for (const frame of document.querySelectorAll('figure[data-theme] iframe')) {
+    const theme = frame.closest('figure').dataset.theme;
+    const set = () => { frame.contentDocument.documentElement.dataset.theme = theme; };
+    frame.addEventListener('load', set);
+    if (frame.contentDocument?.readyState === 'complete' && frame.contentDocument.URL !== 'about:blank') set();
+  }
 })();
 </script>
 </body>
