@@ -21,7 +21,7 @@ page and document I make.
   A printed document needs none.
 - `style.html` shows `brand.css` with itself: every colour in both themes and
   its contrast, read from the stylesheet as the page opens, then the fonts,
-  the type, and the hub, stitchback, newton3 and dotclaude as live frames
-  that take the theme the switch chooses. The home page's footer links to
-  it. A project colour that differs by theme is `light-dark(light, dark)`,
+  the type, and the hub, stitchback, fieldmap, newton3 and dotclaude as live
+  frames that take the theme the switch chooses. The home page's footer
+  links to it. A project colour that differs by theme is `light-dark(light, dark)`,
   so it follows the theme `brand.css` sets.
